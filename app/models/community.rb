@@ -1,4 +1,4 @@
 class Community < ApplicationRecord
   belongs_to :account
-  validates_presence_of :url, :name, :bio
+  validates_presence_of :url, :name, :rules
 end
