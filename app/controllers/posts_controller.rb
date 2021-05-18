@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @posts =  @community.posts
+    @posts = @community.posts
   end
 
   def new
@@ -35,6 +35,6 @@ class PostsController < ApplicationController
   end
 
   def post_values
-    params.require(:post).permit(:title, :body )
+    params.require(:post).permit(:title, :body)
   end
 end
