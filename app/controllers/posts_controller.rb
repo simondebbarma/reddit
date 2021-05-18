@@ -6,7 +6,9 @@ class PostsController < ApplicationController
     @posts = Post.all
   end
 
-  def show; end
+  def show
+    @posts =  @community.posts
+  end
 
   def new
     @community = Community.find(params[:community_id])
