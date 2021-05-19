@@ -7,6 +7,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @community = Community.find(params[:community_id])
     @posts = @community.posts
   end
 

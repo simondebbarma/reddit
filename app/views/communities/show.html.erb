@@ -2,11 +2,8 @@
 
 <%= @community.name %>
 
-<% if @community.posts.count > 0 %>
-  <% @community.posts.each do |post| %>
-    <h4><%= link_to post.title, community_post_path(@community, post) %></h4>
-    <p><%= truncate post.body, length: 200 %></p>
-  <% end %>
+<% if @posts.count > 0 %>
+  <%= render partial: "posts/list", locals: { posts: @posts } %>
 <% else %>
   There are no posts right now!
 <% end %>
