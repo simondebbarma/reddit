@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-sm-8">
+  </div>
+  <div class="col-sm-4">
+    <p class="h4"><%= @profile.username %></p>
+    <p><%= @profile.full_name %></p>
+
+    <p>Cake Day: <%= @profile.created_at.strftime("%d/%m/%Y")%> </p>
+  </div>
+</div>
