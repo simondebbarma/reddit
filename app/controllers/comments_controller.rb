@@ -6,15 +6,14 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.js {
         if @comment.save
-          render "messages/create"
+          @comments = Comment.where(post_id: @comment.post_id)
+          render "comments/create"
         else
           # unable to save
         end
       }
     end
-  end
-
-  private
+  end   
   
   def comment_params
     params.require(:comment).permit(:message, :post_id)
