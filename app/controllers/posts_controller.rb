@@ -1,13 +1,16 @@
 class PostsController < ApplicationController
   before_action :authenticate_account!, except: %i[index show]
   before_action :set_post, only: [:show]
+  before_action :auth_subscriber, only: [:new]
 
   def index
     @posts = Post.all
   end
 
   def show
+    @community = Community.find(params[:community_id])
     @posts = @community.posts
+    @comment = Comment.new
   end
 
   def new
@@ -31,7 +34,15 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.includes(:comments).find(params[:id])
+  end
+
+  def auth_subscriber
+    if Subscription.where(community_id: params[:community_id], account_id: current_account.id).any?
+      redirect_to root_path, flash: { danger: 'You are not suthorised to view this page. Subscribe before posting.' }
+    else
+      redirect_to root_path
+    end
   end
 
   def post_values

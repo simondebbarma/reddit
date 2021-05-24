@@ -1,16 +1,25 @@
-<%= link_to "Create New Post", new_community_post_path(@community), class: "btn btn-primary float-right", style: "float: right;"%>
+<h3><%= @community.name %></h3>
 
-<%= @community.name %>
-
-<% if @community.posts.count > 0 %>
-  <% @posts.each do |post| %>
-    <h4><%= link_to post.title, community_post_path(@community, post) %></h4>
-    <p><%= truncate post.body, length: 200 %></p>
-  <% end %>
-<% else %>
-  There are no posts right now!
-<% end %>
-
-<small>
-  <%= simple_format @community.rules %>
-</small>
+<div class="row">
+  <div class="col-sm-8">
+    <% if @posts.count > 0 %>
+      <%= render partial: "posts/list", locals: { posts: @posts } %>
+    <% else %>
+      There are no posts right now!
+    <% end %>
+  </div>
+  <div class="col-sm-4">
+    <div class="col">
+      <% if @is_subscribed %>
+        <%= link_to "Create New Post", new_community_post_path(@community), class: "btn btn-primary float-right" if @is_subscribed %>
+      <% else %>
+        <%= render partial: "communities/subscribe", locals: { community_id: @community.id } %>
+      <% end%>
+    </div>
+    <p class="h4"><%= pluralize @subscriber_count, "member" %></p>
+    <p><%= @community.summary %></p>
+    <small>
+      <%= simple_format @community.rules %>
+    </small>
+  </div>
+</div>

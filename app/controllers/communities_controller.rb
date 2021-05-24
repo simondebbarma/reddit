@@ -6,7 +6,17 @@ class CommunitiesController < ApplicationController
     @communities = Community.all
   end
 
-  def show; end
+  def show
+    @posts = @community.posts
+    @subscriber_count = @community.subscribers.count
+    @is_subscribed = if account_signed_in?
+                       Subscription.where(community_id: @community.id,
+                                          account_id: @current_account.id).any?
+                     else
+                       false
+                     end
+    @subscription = Subscription.new
+  end
 
   def new
     @community = Community.new
