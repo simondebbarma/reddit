@@ -38,8 +38,10 @@ class PostsController < ApplicationController
   end
 
   def auth_subscriber
-    unless Subscription.where(community_id: params[:community_id], account_id: current_account.id).any?
-      redirect_to root_path, flash: { danger: "you are not suthorised to view this page. Subscribe to the community before posting."}
+    if Subscription.where(community_id: params[:community_id], account_id: current_account.id).any?
+      redirect_to root_path, flash: { danger: 'You are not suthorised to view this page. Subscribe before posting.' }
+    else
+      redirect_to root_path
     end
   end
 
